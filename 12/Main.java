@@ -47,7 +47,7 @@ public class Main {
         System.out.println("Is " + b + " greater than 8? " + (b > 8));
 
         // ================================
-        // Example 4: Operator Precedence Demo
+        // Example 5: Operator Precedence Demo
         // ================================
 
         // Expression: 7*49/7 + 35/7
