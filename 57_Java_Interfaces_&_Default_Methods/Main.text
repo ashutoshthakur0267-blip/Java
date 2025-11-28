@@ -1,0 +1,166 @@
+🧩 What is an Interface in Java?
+
+An interface in Java is a blueprint of a class.
+It contains abstract methods (no body) and constants.
+Classes that implement an interface must provide implementations for its methods.
+
+🔹 Basic Syntax
+interface Animal {
+    void sound();  // abstract method (public + abstract by default)
+}
+
+🔹 Implementation
+class Dog implements Animal {
+    public void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+
+✅ Interfaces provide abstraction and multiple inheritance of behavior.
+
+☕ Why Default Methods Were Introduced (Java 8)
+
+Before Java 8:
+
+If you added a new method to an existing interface,
+all classes implementing it would break (since they’d lack the new method).
+
+To solve this, Java 8 introduced default methods,
+allowing interfaces to provide method implementations.
+
+🧩 Default Methods — Definition
+
+A default method is a method with a body inside an interface, defined using the keyword default.
+
+🔹 Syntax
+interface InterfaceName {
+    default void methodName() {
+        // method body
+    }
+}
+
+
+✅ Purpose:
+
+To add new functionality to interfaces without breaking old code.
+
+🧱 Example 1 — Default Method in Interface
+interface Vehicle {
+    void start();  // abstract method
+
+    // default method
+    default void showInfo() {
+        System.out.println("This is a vehicle interface");
+    }
+}
+
+class Car implements Vehicle {
+    public void start() {
+        System.out.println("Car starting...");
+    }
+}
+
+public class DefaultMethodDemo {
+    public static void main(String[] args) {
+        Car car = new Car();
+        car.start();
+        car.showInfo();  // default method called
+    }
+}
+
+✅ Output:
+Car starting...
+This is a vehicle interface
+
+⚠️ Diamond Problem with Default Methods
+
+If a class implements multiple interfaces that have same default method,
+Java forces you to override it to remove ambiguity.
+
+🔹 Example:
+interface A {
+    default void greet() {
+        System.out.println("Hello from A");
+    }
+}
+
+interface B {
+    default void greet() {
+        System.out.println("Hello from B");
+    }
+}
+
+class C implements A, B {
+    // Must override to resolve conflict
+    public void greet() {
+        System.out.println("Hello from C");
+        A.super.greet();  // calling specific interface method
+        B.super.greet();
+    }
+}
+
+public class MultipleInterfaceDemo {
+    public static void main(String[] args) {
+        C obj = new C();
+        obj.greet();
+    }
+}
+
+✅ Output:
+Hello from C
+Hello from A
+Hello from B
+
+⚙️ Key Rules for Default Methods
+Rule	Description
+1️⃣	Default methods must have a body (using default keyword).
+2️⃣	They can be overridden in implementing classes.
+3️⃣	If two interfaces have same default method → class must override it.
+4️⃣	You can call a specific interface’s version using InterfaceName.super.methodName().
+5️⃣	Default methods cannot be abstract, static, or final simultaneously.
+🧩 Example 3 — Combining Abstract + Default + Static Methods
+interface TestInterface {
+    void show();  // abstract method
+
+    default void display() {
+        System.out.println("Default method in interface");
+    }
+
+    static void info() {
+        System.out.println("Static method in interface");
+    }
+}
+
+class Demo implements TestInterface {
+    public void show() {
+        System.out.println("Implementing abstract method show()");
+    }
+}
+
+public class CombinedInterfaceDemo {
+    public static void main(String[] args) {
+        Demo obj = new Demo();
+        obj.show();       // abstract method
+        obj.display();    // default method
+        TestInterface.info(); // static method (called using interface name)
+    }
+}
+
+✅ Output:
+Implementing abstract method show()
+Default method in interface
+Static method in interface
+
+🧠 Summary Table
+Concept	Description	Example
+Abstract method	No body, must be implemented by class	void sound();
+Default method	Has body, can be inherited or overridden	default void run() { ... }
+Static method	Belongs to interface, not inherited	static void info() { ... }
+Conflict resolution	Class must override if two interfaces have same default method	public void greet() { ... }
+🧾 In One Line
+
+🔸 Interfaces define a contract.
+🔸 Default methods allow adding new behavior to interfaces without breaking existing classes.
+🔸 Static methods belong to the interface itself.
+🔸 If multiple interfaces define same default method → the implementing class must override it.

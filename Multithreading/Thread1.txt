@@ -1,0 +1,38 @@
+✅ Thread Life Cycle in Java
+State	Description	How It Enters This State
+1. New (Born)	Thread is created but not yet started.	When you create a Thread object using new Thread()
+2. Runnable (Ready to Run)	The thread is eligible to run, waiting for CPU time.	When you call start()
+3. Running	The thread is actively executing its run() method.	When CPU scheduler picks the thread
+4. Blocked / Waiting / Timed Waiting	Thread is temporarily inactive, waiting for some condition (sleep, I/O, lock, wait()).	- sleep(ms) → Timed Waiting
+- wait() → Waiting
+- Waiting for I/O or monitor lock → Blocked
+5. Terminated / Dead	Thread has finished execution and cannot be restarted.	run() method ends or stop() is called
+
+     +----------+
+     |   New    |
+     +----------+
+          |
+       start()
+          |
+     +----------+
+     | Runnable |
+     +----------+
+          |
+   (CPU schedules)
+          |
+     +----------+
+     | Running  |
+     +----------+
+     |    |    |
+sleep |    |   wait/lock
+     v    v
++-----------+              +-----------+
+| Timed     |              | Waiting / |
+| Waiting   |              | Blocked   |
++-----------+              +-----------+
+          \       /
+           \     /
+             v
+     +--------------+
+     | Terminated   |
+     +--------------+

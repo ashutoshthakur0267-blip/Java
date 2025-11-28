@@ -1,0 +1,18 @@
+In Java, a thread is a lightweight unit of execution — simply put, it's a separate path of execution inside a program. Multiple threads allow a program to perform multiple tasks simultaneously (or seemingly at the same time through time-slicing).
+
+✅ Simple Definition
+
+A thread in Java is like a mini-program running inside a larger program.
+
+✅ Why Do We Use Threads?
+Without Threads	With Threads
+Tasks run one after another	Tasks can run simultaneously
+Example: First download file → THEN play music	Example: Download file while playing music
+Less responsive UI	More responsive & faster performance
+✅ Real-Life Example
+
+Think of a kitchen in a restaurant:
+
+One Chef (Single Thread) → Cook food one order at a time
+
+Multiple Chefs (Multi-threading) → Cook multiple orders at once

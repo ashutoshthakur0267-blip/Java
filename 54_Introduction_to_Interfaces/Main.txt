@@ -1,0 +1,82 @@
+Great question 👍
+
+In Java,
+
+Abstract classes and Interfaces are used to achieve abstraction and polymorphism — they define what derived classes must implement, without giving full implementation details.
+
+In C++, we achieve the same concepts using abstract classes and pure virtual functions.
+
+🔹 1. Abstract Class in C++
+
+In C++, an abstract class is a class that contains at least one pure virtual function.
+
+Syntax:
+
+class Shape {
+public:
+    virtual void draw() = 0;  // pure virtual function
+};
+
+
+➡️ The = 0 means it’s a pure virtual function — no implementation in the base class.
+
+Derived classes must override it:
+
+class Circle : public Shape {
+public:
+    void draw() override {
+        cout << "Drawing Circle" << endl;
+    }
+};
+
+
+Key points:
+
+You cannot create an object of an abstract class.
+
+It can have both implemented and pure virtual functions (like Java abstract classes).
+
+Use it when you want to define a common base but allow derived classes to provide specific implementations.
+
+🔹 2. Interface Equivalent in C++
+
+C++ doesn’t have a separate interface keyword.
+But an interface in Java can be mimicked by a C++ abstract class with only pure virtual functions.
+
+Example:
+
+class Drawable {
+public:
+    virtual void draw() = 0;
+    virtual void resize() = 0;
+    virtual ~Drawable() {}  // always good to have a virtual destructor
+};
+
+
+Then implement it:
+
+class Rectangle : public Drawable {
+public:
+    void draw() override {
+        cout << "Drawing Rectangle" << endl;
+    }
+    void resize() override {
+        cout << "Resizing Rectangle" << endl;
+    }
+};
+
+
+✅ This behaves like a Java interface —
+
+No data members
+
+Only pure virtual methods
+
+Derived classes must implement all functions
+
+🔸 Summary Table
+Concept	Java	Equivalent in C++
+Abstract class	abstract class Shape { ... }	class Shape { virtual void draw() = 0; };
+Interface	interface Drawable { ... }	class Drawable { virtual void method() = 0; }; (all pure virtual)
+Implementation required in subclass?	Yes	Yes
+Multiple inheritance	Interfaces only	Yes, supported for all classes

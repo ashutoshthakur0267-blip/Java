@@ -1,0 +1,162 @@
+🧩 What is Multiple Inheritance?
+
+👉 Definition:
+Multiple inheritance means a class can inherit features (methods and fields) from more than one parent class.
+
+In simple words:
+
+A class having two or more parent classes.
+
+🔹 Example (Conceptually)
+class A { void show() { System.out.println("A"); } }
+class B { void show() { System.out.println("B"); } }
+class C extends A, B { }   // ❌ Not allowed in Java
+
+
+Here, C inherits from both A and B.
+But this causes ambiguity — because if we call c.show(),
+➡️ The compiler can’t decide whether to call A.show() or B.show().
+
+This is known as the Diamond Problem.
+
+💎 The Diamond Problem
+
+Let’s visualize it 👇
+
+        A
+       / \
+      B   C
+       \ /
+        D
+
+
+Class B and C inherit from A.
+
+Class D inherits from both B and C.
+
+So D indirectly has two copies of A → leading to ambiguity.
+
+⚠️ Why Java Does NOT Support Multiple Inheritance (of classes)
+
+Java designers intentionally disallowed multiple class inheritance to:
+
+Avoid Ambiguity
+(diamond problem — which parent’s method to call?)
+
+Keep the language simple and predictable
+
+Ensure better code maintainability
+
+Hence:
+
+class C extends A, B { } // ❌ Compile-time error
+
+
+You’ll get:
+
+error: '{' expected after class name
+
+✅ How Java Supports Multiple Inheritance (Through Interfaces)
+
+While Java does not support multiple inheritance of classes,
+it does support multiple inheritance of interfaces.
+
+🔹 Example
+interface A {
+    void show();
+}
+
+interface B {
+    void display();
+}
+
+class C implements A, B {
+    public void show() {
+        System.out.println("Show from A");
+    }
+    public void display() {
+        System.out.println("Display from B");
+    }
+}
+
+
+✅ Works fine!
+C inherits behavior from both interfaces A and B.
+
+Reason:
+
+Interfaces only declare methods (no implementation or state).
+
+So, there’s no ambiguity in inheritance.
+
+☕ Java 8 and Beyond — The Twist
+
+Since Java 8, interfaces can have default and static methods with implementations.
+
+This reintroduces a potential ambiguity — but Java handles it clearly.
+
+🔹 Example with Default Methods
+interface A {
+    default void show() {
+        System.out.println("A's show");
+    }
+}
+
+interface B {
+    default void show() {
+        System.out.println("B's show");
+    }
+}
+
+class C implements A, B {
+    // Must override to resolve conflict
+    public void show() {
+        System.out.println("C's own show");
+        A.super.show(); // optionally call specific parent
+    }
+}
+
+
+✅ Output:
+
+C's own show
+A's show
+
+🧠 Java’s Rule to Resolve Conflict
+
+If a class implements multiple interfaces that have default methods with the same signature,
+then the class must override that method to resolve ambiguity.
+
+This is sometimes called the “class wins” or “most specific implementation wins” rule.
+
+🔸 Multiple Inheritance in Interfaces
+
+Even interfaces can inherit from multiple interfaces:
+
+interface A {
+    void show();
+}
+
+interface B {
+    void display();
+}
+
+interface C extends A, B {
+    void print();
+}
+
+
+✅ This is allowed — it’s still not ambiguous because there’s no implementation conflict.
+
+🧾 Summary Table
+Concept	Supported in Java?	Notes
+Multiple class inheritance	❌ No	Avoids diamond problem
+Multiple interface inheritance	✅ Yes	Safe, no ambiguity
+Multiple inheritance with default methods	✅ Yes (since Java 8)	Must override if conflict
+Constructors in interfaces	❌ Not allowed	No state, only behavior
+Purpose	To allow polymorphism and abstraction without ambiguity	
+🧠 In One Line
+
+🔸 Java does not allow multiple inheritance of classes to avoid ambiguity.
+🔸 Java allows multiple inheritance of interfaces, because interfaces define behavior, not state.
+🔸 From Java 8, if multiple interfaces have default methods with the same signature, the implementing class must override to resolve the conflict.
