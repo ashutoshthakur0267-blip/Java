@@ -8,7 +8,7 @@ class Person {
 }
 
 // ✅ Child Class 1
-class Student extends Person {
+class Student extends Person1 {
     public void studentInfo() {
         // secret cannot be accessed -> private
         System.out.println("Name: " + name); // protected
